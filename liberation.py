@@ -1,9 +1,12 @@
 import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
-from driverpath import driverpath
+from selenium.webdriver.chrome.options import Options
+import driverpath
 
 def main():
+    chrome_options = Options()
+    ublock_path = ''
     driver = webdriver.Chrome(driverpath.get())
     driver.get('https://www.browndailyherald.com/')
 
@@ -18,15 +21,29 @@ def main():
     links = soup.find_all('a')
     bdh_links = []
 
-    # Filter links that start with 'https://www.browndailyherald.com/'
+    # Filter links that start with 'https://www.browndailyherald.com/' and bad ones
+    
+    # Links that will always be present but we don't want.
+    bad_links = ['https://www.browndailyherald.com/page/about',
+                 'https://www.browndailyherald.com/page/join', 
+                 'https://www.browndailyherald.com/page/contact', 
+                 'https://www.browndailyherald.com/page/advertise', 
+                 'https://www.browndailyherald.com/page/dei', 
+                 'https://www.browndailyherald.com/page/subscribe', 
+                 'https://www.browndailyherald.com/', 
+                 'https://www.browndailyherald.com/page/submit', 
+                 'https://www.browndailyherald.com/newsletters']
+    
+
     for link in links:
         href = link.get('href')
-        if href and href.startswith('https://www.browndailyherald.com/'):
+        if href and href.startswith('https://www.browndailyherald.com/') and href not in bad_links and href not in bdh_links:
             bdh_links.append(href)
 
     print(bdh_links)
 
-    driver.quit()
+    driver.quit() 
+
 
 if __name__ == '__main__':
     main()
