@@ -1,9 +1,10 @@
 import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
+from driverpath import driverpath
 
 def main():
-    driver = webdriver.Chrome('/Users/levineuwirth/Downloads/chrome-mac-x64/Google Chrome for Testing.app')
+    driver = webdriver.Chrome(driverpath.get())
     driver.get('https://www.browndailyherald.com/')
 
     # Wait for the page to load (adjust the delay as needed)
