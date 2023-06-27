@@ -4,6 +4,12 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
 import driverpath
 
+#TODO: Ensure UBlock is active, they get NO ad revenue from this!
+def stringize(link_string):
+    link_string = link_string.split('/')[6]
+    link_string = link_string.replace('-', ' ')
+    return link_string
+
 def main():
     chrome_options = Options()
     ublock_path = ''
@@ -37,12 +43,14 @@ def main():
 
     for link in links:
         href = link.get('href')
-        if href and href.startswith('https://www.browndailyherald.com/') and href not in bad_links and href not in bdh_links:
+        if href and href.startswith('https://www.browndailyherald.com/article/') and href not in bad_links and href not in bdh_links:
             bdh_links.append(href)
 
-    print(bdh_links)
-
+    for i in range(10):
+        print("[" + str(i) + "] " + stringize(bdh_links[i]))
     driver.quit() 
+    
+    choice = input("Enter the number of the article you want to read\nor enter 10 for information on why BDH's terms of service are bad: ")
 
 
 if __name__ == '__main__':
