@@ -17,6 +17,8 @@ def repl(bdh_links):
     else:
         chrome_options = Options()
         ublock_path = ''
+        #chrome_options.add_extension(ublock_path)
+        chrome_options.add_argument('--headless')
         driver = webdriver.Chrome(driverpath.get())
         driver.get(bdh_links[int(choice)])
         page_source = driver.page_source
@@ -31,6 +33,8 @@ def repl(bdh_links):
 def main():
     chrome_options = Options()
     ublock_path = ''
+    #chrome_options.add_extension(ublock_path)
+    chrome_options.add_argument('--headless')
     driver = webdriver.Chrome(driverpath.get())
     driver.get('https://www.browndailyherald.com/')
     page_source = driver.page_source
